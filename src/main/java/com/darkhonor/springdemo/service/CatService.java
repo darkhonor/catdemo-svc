@@ -25,27 +25,29 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Alex Ackerman <aackerman@darkhonor.com>
  */
+@Service
 public class CatService {
     private final Logger log = LoggerFactory.getLogger(CatService.class);
     
     @Autowired
-    Datastore mDatastore;
+    Datastore datastore;
     
     private KeyFactory mCatKeyFactory;
     
     @PostConstruct
     public void initializeKeyFactories() {
         log.info("Initializing key factories");
-        this.mCatKeyFactory = mDatastore.newKeyFactory().kind("Cat");
+        this.mCatKeyFactory = datastore.newKeyFactory().kind("Cat");
     }
     
     public Entity createCat(Cat cat) {
-        return mDatastore.put(createCatEntity(cat));
+        return datastore.put(createCatEntity(cat));
     }
     
     private Entity createCatEntity(Cat cat) {

@@ -40,7 +40,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 public class CatController {
 
     @Autowired
-    CatService mCatService;
+    CatService catService;
     
     @GetMapping("/")
     public String hello() {

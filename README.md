@@ -1,5 +1,6 @@
 Demonstration of Spring Boot w/Google AppEngine, Datastore
 =========================
+[![Build Status](https://travis-ci.org/darkhonor/catdemo-svc.svg?branch=master)](https://travis-ci.org/darkhonor/catdemo-svc)
 
 This is one part of three services created to demonstrate how to have a 
 microservice using SpringBoot hosted on Google's AppEngine delivering 

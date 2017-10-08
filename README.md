@@ -5,10 +5,11 @@ This is one part of three services created to demonstrate how to have a
 microservice using SpringBoot hosted on Google's AppEngine delivering 
 authenticated content via RESTful services.
 
-This is based upon code consolidated form numerous sources:
+This is based upon code and discussion consolidated from numerous sources:
 
-* https://github.com/GoogleCloudPlatform/getting-started-java/tree/master/appengine-standard-java8/springboot-appengine-standard
-* https://github.com/o/spring-boot-google-cloud-datastore-sample
+* [SpringBoot HelloWorld for App Engine Standard (Java 8)](https://github.com/GoogleCloudPlatform/getting-started-java/tree/master/appengine-standard-java8/springboot-appengine-standard)
+* [Google Cloud Datastore - Spring Boot Sample](https://github.com/o/spring-boot-google-cloud-datastore-sample)
+* [Spring Data on GAE - Part 1 - Basic JPA](http://tommysiu.blogspot.kr/2014/01/spring-data-on-gae-part-1.html)
 
 Prerequisites:
 * [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
@@ -18,15 +19,15 @@ Prerequisites:
 
 Run locally:
    
-    `mvn appengine:start`
+    mvn appengine:start
 
 Building:
 
-    `mvn clean package`
+    mvn clean package
 
 Deploying:
 
-    `mvn appengine:deploy`
+    mvn appengine:deploy
 
 ### License
 

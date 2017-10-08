@@ -15,10 +15,48 @@
  */
 package com.darkhonor.springdemo.model;
 
+import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  *
  * @author Alex Ackerman <aackerman@darkhonor.com>
  */
 public class Cat {
+    @NotNull
+    private Long mId;
+    @NotBlank
+    private String mName;
+    private String mColor;
+    
+    private Cat() {
+    }
+    
+    public Long getId() {
+        return mId;
+    }
+    
+    public Cat setId(Long id) {
+        this.mId = id;
+        return this;
+    }
+    
+    public String getName() {
+        return mName;
+    }
+    
+    public Cat setName(String name) {
+        this.mName = name;
+        return this;
+    }
+    
+    public String getColor() {
+        return mColor;
+    }
+    
+    public Cat setColor(String color) { 
+        this.mColor = color;
+        return this;
+    }
     
 }

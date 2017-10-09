@@ -14,7 +14,6 @@
     </organization>
 
     <properties>
-        <app.id>gae-spring-boot-microsvc</app.id>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <spring.boot.version>1.5.7.RELEASE</spring.boot.version> <!-- DO NOT UPDATE w/o MANUAL TESTING -->
@@ -48,16 +47,6 @@
                 </exclusion>
             </exclusions>        
         </dependency>
-<!--        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-tomcat</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

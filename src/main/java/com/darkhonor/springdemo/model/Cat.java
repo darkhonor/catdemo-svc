@@ -15,48 +15,61 @@
  */
 package com.darkhonor.springdemo.model;
 
+import com.google.cloud.datastore.Entity;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- *
+ * A simple POJO to use in the example service.  Who doesn't like cats?
+ * 
  * @author Alex Ackerman <aackerman@darkhonor.com>
  */
 public class Cat {
+
     @NotNull
     private Long mId;
     @NotBlank
     private String mName;
     private String mColor;
-    
+
     private Cat() {
     }
-    
+
+    public Cat(Entity entity) {
+        mId = entity.hasKey() ? entity.getKey().getId() : null;
+        mName = entity.contains("name") ? entity.getString("name") : "NO NAME";
+        mColor = entity.contains("color") ? entity.getString("color") : "Unknown";
+    }
+
     public Long getId() {
         return mId;
     }
-    
+
     public Cat setId(Long id) {
         this.mId = id;
         return this;
     }
-    
+
     public String getName() {
         return mName;
     }
-    
+
     public Cat setName(String name) {
         this.mName = name;
         return this;
     }
-    
+
     public String getColor() {
         return mColor;
     }
-    
-    public Cat setColor(String color) { 
+
+    public Cat setColor(String color) {
         this.mColor = color;
         return this;
     }
     
+    @Override
+    public String toString() {
+        return this.mName + " is a " + this.mColor + " cat.";
+    }
 }

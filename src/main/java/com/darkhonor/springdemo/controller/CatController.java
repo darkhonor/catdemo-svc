@@ -20,7 +20,9 @@ package com.darkhonor.springdemo.controller;
 //import org.springframework.http.ResponseEntity;
 //import org.springframework.web.bind.annotation.PathVariable;
 //import org.springframework.web.bind.annotation.RequestBody;
+import com.darkhonor.springdemo.model.Cat;
 import com.darkhonor.springdemo.service.CatService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,6 +48,12 @@ public class CatController {
     public String hello() {
         return "Hello.  I like cats";
     }
+    
+//    @RequestMapping(value = "/allcats", method = GET)
+//    public List<Cat> getAllCats() {
+//        return catService.getAllCats();
+//    }
+    
 //    @RequestMapping(value = "/hello", method = GET)
 //    public String hello() {
 //        return "Hello.  I like cats";

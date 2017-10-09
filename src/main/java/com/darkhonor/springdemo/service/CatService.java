@@ -20,6 +20,12 @@ import com.google.cloud.datastore.Datastore;
 import com.google.cloud.datastore.Entity;
 import com.google.cloud.datastore.Key;
 import com.google.cloud.datastore.KeyFactory;
+import com.google.cloud.datastore.Query;
+import com.google.cloud.datastore.QueryResults;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableList.Builder;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,38 +39,50 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class CatService {
+
     private final Logger log = LoggerFactory.getLogger(CatService.class);
-    
+
     @Autowired
     Datastore datastore;
-    
+
     private KeyFactory mCatKeyFactory;
-    
+
     @PostConstruct
     public void initializeKeyFactories() {
         log.info("Initializing key factories");
-        this.mCatKeyFactory = datastore.newKeyFactory().kind("Cat");
+        this.mCatKeyFactory = datastore.newKeyFactory().setKind("Cat");
     }
-    
+
     public Entity createCat(Cat cat) {
         return datastore.put(createCatEntity(cat));
     }
-    
+
     private Entity createCatEntity(Cat cat) {
         Key key = this.mCatKeyFactory.newKey(cat.getId().toString());
-        return Entity.builder(key)
+        return Entity.newBuilder(key)
                 .set("name", cat.getName())
                 .set("color", cat.getColor())
                 .build();
     }
-    
-    
-    
+
+    public List<Cat> getAllCats() {
+        List<Cat> cats = new ArrayList<>();
+        Query<Entity> query = Query.newEntityQueryBuilder().setKind("Cat").build();
+        QueryResults<Entity> results = datastore.run(query);
+
+        Builder<Cat> resultListBuilder = ImmutableList.builder();
+        while (results.hasNext()) {
+            resultListBuilder.add(new Cat(results.next()));
+        }
+
+        return resultListBuilder.build();
+    }
+
     @Async
     public void updateCat(Long id, Cat cat) {
         // TODO: Need to write updateCat method
     }
-    
+
     @Async
     public void deleteCat(Long id) {
         // TODO: Need to write deleteCat method

@@ -16,17 +16,10 @@
 package com.darkhonor.springdemo.service;
 
 import com.darkhonor.springdemo.model.Cat;
-import com.google.cloud.datastore.Datastore;
-import com.google.cloud.datastore.Entity;
-import com.google.cloud.datastore.Key;
-import com.google.cloud.datastore.KeyFactory;
-import com.google.cloud.datastore.Query;
-import com.google.cloud.datastore.QueryResults;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableList.Builder;
-import java.util.ArrayList;
+import com.googlecode.objectify.Key;
+import com.googlecode.objectify.Objectify;
+import com.googlecode.objectify.ObjectifyFactory;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,39 +36,18 @@ public class CatService {
     private final Logger log = LoggerFactory.getLogger(CatService.class);
 
     @Autowired
-    Datastore datastore;
+    private ObjectifyFactory objectifyFactory;
 
-    private KeyFactory mCatKeyFactory;
-
-    @PostConstruct
-    public void initializeKeyFactories() {
-        log.info("Initializing key factories");
-        this.mCatKeyFactory = datastore.newKeyFactory().setKind("Cat");
-    }
-
-    public Entity createCat(Cat cat) {
-        return datastore.put(createCatEntity(cat));
-    }
-
-    private Entity createCatEntity(Cat cat) {
-        Key key = this.mCatKeyFactory.newKey(cat.getId().toString());
-        return Entity.newBuilder(key)
-                .set("name", cat.getName())
-                .set("color", cat.getColor())
-                .build();
+    public Key<Cat> createCat(Cat cat) {
+        Objectify ofy = this.objectifyFactory.begin();
+        return ofy.save().entity(cat).now();
     }
 
     public List<Cat> getAllCats() {
-        List<Cat> cats = new ArrayList<>();
-        Query<Entity> query = Query.newEntityQueryBuilder().setKind("Cat").build();
-        QueryResults<Entity> results = datastore.run(query);
-
-        Builder<Cat> resultListBuilder = ImmutableList.builder();
-        while (results.hasNext()) {
-            resultListBuilder.add(new Cat(results.next()));
-        }
-
-        return resultListBuilder.build();
+        Objectify ofy = this.objectifyFactory.begin();
+        List<Cat> results = ofy.load().type(Cat.class).list();
+        log.debug("Number of Cats Returned: " + results.size());
+        return results;
     }
 
     @Async
@@ -86,5 +58,18 @@ public class CatService {
     @Async
     public void deleteCat(Long id) {
         // TODO: Need to write deleteCat method
+    }
+
+    public int getCount() {
+        Objectify ofy = this.objectifyFactory.begin();
+        return ofy.load().type(Cat.class).count();
+    }
+
+    public void initialize() {
+
+        Cat newCat = new Cat("Fluffy", "White");
+        log.debug("Initializing DB with Fluffy: " + newCat);
+        Key<Cat> key = this.createCat(newCat);
+        log.debug("Cat saved to the databse.  Key: " + key);
     }
 }

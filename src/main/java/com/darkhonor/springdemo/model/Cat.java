@@ -15,8 +15,8 @@
  */
 package com.darkhonor.springdemo.model;
 
-import com.google.cloud.datastore.Entity;
-import javax.validation.constraints.NotNull;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -24,9 +24,10 @@ import org.hibernate.validator.constraints.NotBlank;
  * 
  * @author Alex Ackerman <aackerman@darkhonor.com>
  */
+@Entity
 public class Cat {
 
-    @NotNull
+    @Id
     private Long mId;
     @NotBlank
     private String mName;
@@ -35,10 +36,9 @@ public class Cat {
     private Cat() {
     }
 
-    public Cat(Entity entity) {
-        mId = entity.hasKey() ? entity.getKey().getId() : null;
-        mName = entity.contains("name") ? entity.getString("name") : "NO NAME";
-        mColor = entity.contains("color") ? entity.getString("color") : "Unknown";
+    public Cat(String name, String color) {
+        mName = name;
+        mColor = color;
     }
 
     public Long getId() {

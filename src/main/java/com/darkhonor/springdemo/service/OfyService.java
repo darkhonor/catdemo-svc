@@ -13,21 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.darkhonor.springdemo;
+package com.darkhonor.springdemo.service;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
+import com.darkhonor.springdemo.model.Cat;
+import com.googlecode.objectify.Objectify;
+import com.googlecode.objectify.ObjectifyFactory;
+import com.googlecode.objectify.ObjectifyService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Alex Ackerman <aackerman@darkhonor.com>
  */
-@SpringBootApplication
-@ComponentScan (basePackages={"com.googlecode.objectify.spring"})
-public class CatDemoApplication {
+@Service
+@Qualifier("objectifyService")
+public class OfyService {
+    static {
+        ObjectifyService.register(Cat.class);
+    }
 
-    public static void main(String[] args) {
-        SpringApplication.run(CatDemoApplication.class, args);
+    public static Objectify ofy() {
+        return ObjectifyService.ofy();
+    }
+
+    public static ObjectifyFactory factory() {
+        return ObjectifyService.factory();
     }
 }

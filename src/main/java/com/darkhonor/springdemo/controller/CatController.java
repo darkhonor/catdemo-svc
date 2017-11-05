@@ -24,6 +24,7 @@ import com.darkhonor.springdemo.model.Cat;
 import com.darkhonor.springdemo.service.CatService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,21 +39,27 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
  * @author Alex Ackerman <aackerman@darkhonor.com>
  */
 @RestController
-//@RequestMapping("/")
+@EnableAutoConfiguration
 public class CatController {
 
     @Autowired
     CatService catService;
     
-    @GetMapping("/")
+    @RequestMapping("/")
     public String hello() {
-        return "Hello.  I like cats";
+        return "{\"message\": \"Hello.  I like cats\"}";
     }
     
-//    @RequestMapping(value = "/allcats", method = GET)
-//    public List<Cat> getAllCats() {
-//        return catService.getAllCats();
-//    }
+    @RequestMapping(value = "/allcats", method = GET, produces = "application/json")
+    public List<Cat> getAllCats() {
+        return catService.getAllCats();
+    }
+    
+    @RequestMapping(value = "/init", method = GET)
+    public String initialize() {
+        catService.initialize();
+        return "Complete";
+    }
     
 //    @RequestMapping(value = "/hello", method = GET)
 //    public String hello() {

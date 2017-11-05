@@ -17,7 +17,7 @@
         <app.id>gae-spring-boot-microsvc</app.id>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spring.boot.version>1.5.7.RELEASE</spring.boot.version> <!-- DO NOT UPDATE w/o MANUAL TESTING -->
+        <spring.boot.version>1.5.8.RELEASE</spring.boot.version> <!-- DO NOT UPDATE w/o MANUAL TESTING -->
         <java.version>1.8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -29,12 +29,11 @@
         <maven>3.3.9</maven>
     </prerequisites>
     
+    <!-- Inherit defaults from Spring Boot -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.7.RELEASE</version>
-        <relativePath/>
-        <!-- lookup parent from repository -->
+        <version>1.5.8.RELEASE</version>
     </parent>
 
     <dependencies>
@@ -48,7 +47,7 @@
                 </exclusion>
             </exclusions>        
         </dependency>
-<!--        <dependency>
+        <!--        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <exclusions>
@@ -76,10 +75,26 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>com.googlecode.objectify</groupId>
+            <artifactId>objectify</artifactId>
+            <version>5.1.21</version>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.objectify-appengine-spring</groupId>
+            <artifactId>objectify-appengine-spring</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.appengine</groupId>
+            <artifactId>appengine-api-1.0-sdk</artifactId>
+            <version>1.9.59</version>
+            <!--<scope>provided</scope>-->
+        </dependency>
+        <!--        <dependency>
             <groupId>com.google.cloud</groupId>
             <artifactId>google-cloud-datastore</artifactId>
             <version>${gcloud.datastore.version}</version>
-        </dependency>
+        </dependency>-->
         <!-- Java9 ASM Module Error.  Caused during import of spring-boot-starter-jersey.  Fix documented here:
             https://stackoverflow.com/questions/41995029/jersey-spring3-2-25-1-produces-failed-startup-of-context-error-in-jetty-9-3
         -->
@@ -90,10 +105,36 @@
         </dependency>
     </dependencies>
     
-    <dependencyManagement>
+    <!-- Add Spring repositories -->
+    <!-- (you don't need this if you are using a .RELEASE version) -->
+    <repositories>
+        <repository>
+            <id>spring-snapshots</id>
+            <url>http://repo.spring.io/snapshot</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>spring-milestones</id>
+            <url>http://repo.spring.io/milestone</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>spring-snapshots</id>
+            <url>http://repo.spring.io/snapshot</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>spring-milestones</id>
+            <url>http://repo.spring.io/milestone</url>
+        </pluginRepository>
+    </pluginRepositories>
+    
+<!--    <dependencyManagement>
         <dependencies>
             <dependency>
-                <!-- Import dependency management from Spring Boot -->
+                 Import dependency management from Spring Boot 
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>${spring.boot.version}</version>
@@ -101,7 +142,7 @@
                 <scope>import</scope>
             </dependency>
         </dependencies>
-    </dependencyManagement>
+    </dependencyManagement>-->
     
     <build>
         <plugins>

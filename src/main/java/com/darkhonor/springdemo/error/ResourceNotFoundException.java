@@ -13,21 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.darkhonor.springdemo;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
+package com.darkhonor.springdemo.error;
 
 /**
  *
  * @author Alex Ackerman <aackerman@darkhonor.com>
  */
-@SpringBootApplication
-@ComponentScan (basePackages={"com.googlecode.objectify.spring"})
-public class CatDemoApplication {
-
-    public static void main(String[] args) {
-        SpringApplication.run(CatDemoApplication.class, args);
+public class ResourceNotFoundException extends RuntimeException {
+    
+    public ResourceNotFoundException() {
+        this("Resource not found");
+    }
+    
+    public ResourceNotFoundException(String message) {
+        this(message, null);
+    }
+    
+    public ResourceNotFoundException(String message, Throwable cause) {
+        super(message, cause);
     }
 }

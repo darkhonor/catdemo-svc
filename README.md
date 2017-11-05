@@ -6,6 +6,8 @@ This is one part of three services created to demonstrate how to have a
 microservice using SpringBoot hosted on Google's AppEngine delivering 
 authenticated content via RESTful services.
 
+UPDATE: This is compiling, but not running properly.  I'm getting a generic 404 error and no way to find out why...
+
 This is based upon code and discussion consolidated from numerous sources:
 
 * [SpringBoot HelloWorld for App Engine Standard (Java 8)](https://github.com/GoogleCloudPlatform/getting-started-java/tree/master/appengine-standard-java8/springboot-appengine-standard)
@@ -16,7 +18,7 @@ This is based upon code and discussion consolidated from numerous sources:
 Prerequisites:
 * [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 * [AppEngine Standard Environment](https://cloud.google.com/appengine/) (Java 8)
-* [Maven](https://maven.apache.org/download.cgi) (at least 3.3)
+* [Maven](https://maven.apache.org/download.cgi) (at least 3.5)
 * [Google Cloud SDK](https://cloud.google.com/sdk/)
 
 ### Changes Needed to Build for You
